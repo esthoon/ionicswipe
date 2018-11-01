@@ -6,9 +6,37 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content padding><ion-list align-items-start>
+    <ion-item no-padding  style="font-weight:bold;">
+      <ion-row>
+        <ion-col>
+          <span>{{firstCol | uppercase}}</span>
+        </ion-col>
+        <ion-col>
+          <span>{{secondCol | uppercase}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item-sliding #slidingItem *ngFor="let reg of registrants; let i=index;">
+    <ion-item no-padding   (click)='openOption(slidingItem)'>
+    <ion-row>
+      <ion-col>
+        {{reg.Id }}
+      </ion-col>
+      <ion-col>
+       <span style="float:left">{{reg.Name }}</span>
+       <span style="float:right" *ngIf="reg.Attendance"><button ion-button large style="height: 20px" color="secondary" clear disabled><ion-icon name="checkmark-circle-outline"></ion-icon></button></span>
+     </ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item-options side="left"   (click)='closeOption()' (ionSwipe)='openOption(slidingItem)'>
+      <button ion-button large style="width:100px" *ngIf="!reg.Attendance" (click)='markAttendance(reg, slidingItem)'>
+        <ion-icon name="create"></ion-icon>
+      </button>
+      <button ion-button large style="width:100px" color="danger" *ngIf='reg.Attendance' (click)='undo(reg, slidingItem)'>
+        <ion-icon name="undo"></ion-icon>
+      </button>
+    </ion-item-options>
+</ion-item-sliding>
+</ion-list>
 </ion-content>
