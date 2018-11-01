@@ -18,7 +18,7 @@
       </ion-row>
     </ion-item>
     <ion-item-sliding #slidingItem *ngFor="let reg of registrants; let i=index;">
-    <ion-item no-padding   (click)='openOption(slidingItem)'>
+    <ion-item no-padding  #thisItem (click)='openOption(slidingItem, thisItem)'>
     <ion-row>
       <ion-col>
         {{reg.Id }}
@@ -29,11 +29,11 @@
      </ion-col>
     </ion-row>
   </ion-item>
-  <ion-item-options side="left"   (click)='closeOption()' (ionSwipe)='openOption(slidingItem)'>
-      <button ion-button large style="width:100px" *ngIf="!reg.Attendance" (click)='markAttendance(reg, slidingItem)'>
+  <ion-item-options side="left" (click)='closeOption(slidingItem, thisItem)' >
+      <button ion-button large style="width:100px" *ngIf="!reg.Attendance" (click)='markAttendance(reg, slidingItem, thisItem)'>
         <ion-icon name="create"></ion-icon>
       </button>
-      <button ion-button large style="width:100px" color="danger" *ngIf='reg.Attendance' (click)='undo(reg, slidingItem)'>
+      <button ion-button large style="width:100px" color="danger" *ngIf='reg.Attendance' (click)='undo(reg, slidingItem, thisItem)'>
         <ion-icon name="undo"></ion-icon>
       </button>
     </ion-item-options>

@@ -33,30 +33,22 @@ export class HomePage {
     this.secondCol="PARTICIPANT NAME";
   }
 
-  openOption(item:ItemSliding){
+  openOption(item:ItemSliding, thisItem: Item){
     console.log(`item sliding open: ${item.getOpenAmount()} percentage:${item.getSlidingPercent()}`)
     if(this.activeItemSliding!==null){
-      this.closeOption(); 
+      this.closeOption(item, thisItem); 
     }
     this.activeItemSliding = item;
-    item.moveSliding(180);
-    item.moveSliding(180);
-
-    setTimeout(() => {
-      item.close();
-      this.activeItemSliding=null;
-    }, 2000);
+    this.drawSwipeCss(true, item, thisItem);
   }
 
-  closeOption() {
+  closeOption(item: ItemSliding, thisItem: Item) {
     console.log('closing item slide..');
-    if(this.activeItemSliding){
-      this.activeItemSliding.close();
-      this.activeItemSliding = null;
-    }
+    item.close();
+    this.drawSwipeCss(false, item, thisItem);
    }
 
-   markAttendance(reg:Registrant, item:ItemSliding){
+   markAttendance(reg:Registrant, item:ItemSliding, thisItem: Item){
     if(!reg.Attendance){
       reg.Attendance=true;
       console.log('Attendance marked')
@@ -64,10 +56,10 @@ export class HomePage {
       console.log('Duplicate: Attendance has been marked but not reflected')
     }
     item.close();
-    this.activeItemSliding=null
+    this.drawSwipeCss(false, item, thisItem);
   }
 
-  undo(reg:Registrant, slidingItem:ItemSliding){
+  undo(reg:Registrant, slidingItem:ItemSliding, thisItem: Item){
     if(reg.Attendance){
       reg.Attendance=false;
       console.log('Attendance removed');
@@ -75,7 +67,17 @@ export class HomePage {
       console.log('Error: No attendance registered for this registrant')
     }
     slidingItem.close();
-    this.activeItemSliding=null;
+    this.drawSwipeCss(false, slidingItem, thisItem);
+  }
+
+  drawSwipeCss(open: boolean, item:ItemSliding, thisItem: Item){
+    item.setElementClass("active-sliding", open);
+    item.setElementClass("active-slide", open);
+    item.setElementClass("active-options-left", open);
+    var openWidth = "";
+    openWidth = open ? "100" : "0";
+    thisItem.setElementStyle("transform", "translate3d(" + openWidth + "px, 0px, 0px)");
+    if(!open) this.activeItemSliding = null;
   }
 
 }
