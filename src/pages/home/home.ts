@@ -34,23 +34,28 @@ export class HomePage {
   }
 
   openOption(item:ItemSliding){
-    console.log(`item sliding open: ${item.getOpenAmount()} percentage:${item.getSlidingPercent()}`)
-    if(this.activeItemSliding!==null){
-      this.closeOption(); 
-    }
-    this.activeItemSliding = item;
-    item.moveSliding(180);
-    item.moveSliding(180);
-
+    //console.log(`item sliding open: ${item.getOpenAmount()} percentage:${item.getSlidingPercent()}`)
+    
+    this.slideOption(item);
+    item.startSliding(0);
+    item.moveSliding(100);
+    item.moveSliding(100);
+    /*
     setTimeout(() => {
       item.close();
       this.activeItemSliding=null;
     }, 2000);
+    */
+  }
+
+  slideOption(item:ItemSliding){
+    this.closeOption();
+    this.activeItemSliding=item;
   }
 
   closeOption() {
     console.log('closing item slide..');
-    if(this.activeItemSliding){
+    if(this.activeItemSliding!=null){
       this.activeItemSliding.close();
       this.activeItemSliding = null;
     }
