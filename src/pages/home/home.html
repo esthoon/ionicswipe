@@ -6,42 +6,45 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding><ion-list align-items-start>
-    <ion-item no-padding  style="font-weight:bold;">
-      <ion-row>
-        <ion-col>
-          <span>{{firstCol | uppercase}}</span>
-        </ion-col>
-        <ion-col>
-          <span>{{secondCol | uppercase}}</span>
-        </ion-col>
-      </ion-row>
-    </ion-item>
-    <ion-item-sliding #slidingItem *ngFor="let reg of registrants; let i=index;">
-    <ion-item no-padding   (click)='openOption(slidingItem)'  (ionSwipe)='slideOption(slidingItem)' (ionDrag)='slideOption(slidingItem)'>
-    <ion-row>
-      <ion-col>
-        {{reg.Id }}
-      </ion-col>
-      <ion-col>
-       <span style="float:left">{{reg.Name }}</span>
-       <span style="float:right" *ngIf="reg.Attendance"><button ion-button large style="height: 20px" color="secondary" clear disabled><ion-icon name="checkmark-circle-outline"></ion-icon></button></span>
-     </ion-col>
-    </ion-row>
-  </ion-item>
-  <ion-item-options side="left"   (click)='closeOption()'>
-      <button ion-button large style="width:100px" *ngIf="!reg.Attendance" (click)='markAttendance(reg, slidingItem)'>
-        <ion-icon name="create"></ion-icon>
-      </button>
-      <button ion-button large style="width:100px" color="danger" *ngIf='reg.Attendance' (click)='undo(reg, slidingItem)'>
-        <ion-icon name="undo"></ion-icon>
-      </button>
-    </ion-item-options>
-    <ion-item-options side="right"   (click)='closeOption()' (ionSwipe)='slideOption(slidingItem)' (ionDrag)='slideOption(slidingItem)'>
-        <button ion-button large style="width:100px" color="light">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-item-options>
-</ion-item-sliding>
-</ion-list>
+<ion-content padding>
+  <div (swipe)="closeOption()">
+      <ion-list align-items-start>
+          <ion-item no-padding  style="font-weight:bold;">
+            <ion-row>
+              <ion-col>
+                <span>{{firstCol | uppercase}}</span>
+              </ion-col>
+              <ion-col>
+                <span>{{secondCol | uppercase}}</span>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-item-sliding #slidingItem *ngFor="let reg of registrants; let i=index;">
+          <ion-item no-padding   (click)='openOption(slidingItem)'  (ionSwipe)='slideOption(slidingItem)' (ionDrag)='slideOption(slidingItem)'>
+          <ion-row>
+            <ion-col>
+              {{reg.Id }}
+            </ion-col>
+            <ion-col>
+             <span style="float:left">{{reg.Name }}</span>
+             <span style="float:right" *ngIf="reg.Attendance"><button ion-button large style="height: 20px" color="secondary" clear disabled><ion-icon name="checkmark-circle-outline"></ion-icon></button></span>
+           </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item-options side="left"   (click)='closeOption()'>
+            <button ion-button large style="width:100px" *ngIf="!reg.Attendance" (click)='markAttendance(reg, slidingItem)'>
+              <ion-icon name="create"></ion-icon>
+            </button>
+            <button ion-button large style="width:100px" color="danger" *ngIf='reg.Attendance' (click)='undo(reg, slidingItem)'>
+              <ion-icon name="undo"></ion-icon>
+            </button>
+          </ion-item-options>
+          <ion-item-options side="right"   (click)='closeOption()'>
+              <button ion-button large style="width:100px" color="light">
+                <ion-icon name="add"></ion-icon>
+              </button>
+            </ion-item-options>
+      </ion-item-sliding>
+      </ion-list>
+  </div>
 </ion-content>
