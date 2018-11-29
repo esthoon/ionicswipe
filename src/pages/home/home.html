@@ -6,8 +6,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <div (swipe)="closeOption()">
+<ion-content padding >
+  <div (pan)="closeOption()">
       <ion-list align-items-start>
           <ion-item no-padding  style="font-weight:bold;">
             <ion-row>
@@ -20,7 +20,7 @@
             </ion-row>
           </ion-item>
           <ion-item-sliding #slidingItem *ngFor="let reg of registrants; let i=index;">
-          <ion-item no-padding   (click)='openOption(slidingItem)'  (ionSwipe)='slideOption(slidingItem)' (ionDrag)='slideOption(slidingItem)'>
+          <ion-item no-padding   (click)='openOption(slidingItem)' >
           <ion-row>
             <ion-col>
               {{reg.Id }}
